@@ -8,8 +8,18 @@ Where this file and the plan disagree, the plan wins; fix this file.
 ## Hard rules
 - Independent. Never copy, import or vendor code from the `feeinsight.com` repository (DB1).
   DB2 may read DB1 data only through a read-only copy; it never writes to DB1.
-- Small. The whole fee reader stays under 5,000 lines of non-test code. A PR that would push it
-  over says so and needs James's yes.
+- Small. Each agent stays under 1,500 lines of non-test code, and all of DB2 under 10,000.
+  A PR that would push past either says so and needs James's yes.
+- Agentic, and provably so. The agents keep their names and roles (Atlas, Magellan, Rosetta,
+  Knox, Darwin, Hamilton, Deming, Hoovie). Each is a model with one job, its own tools, a budget,
+  a memory and one number it owns, and each must pass the eight checks of the agentic test in the
+  plan. No bank names, web addresses or one-off page fixes in agent code. Budgets, the quote
+  check, publishing and the score are plain code. Deming owns the score; no agent grades itself.
+- Sources are found in tiers and labelled, never thrown away for being the wrong kind. FAQ and
+  product pages are valid partial sources (`docs/sources.md`). Only loan, mortgage and trust
+  material is out of scope.
+- A site that says no to automated visitors is not fetched. Agents read public pages only; they
+  never sign in, submit forms or get past a block. The institution is recorded as not available.
 - No on/off switches. A change either passes the frozen test cases and goes live, or it does not
   merge. No `*_LIVE` flags, no dry-run modes left behind.
 - The answer key is sealed. Tables in the `sealed` schema are read only by the scorer. Reader code,
