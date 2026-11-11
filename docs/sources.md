@@ -11,8 +11,13 @@ reasoning; this file defines the labels the database uses (`0002_source_labels.s
 4. Assembled: no single schedule; fees are collected from partial sources.
 5. Not published: recorded with what was checked, and retried on a schedule.
 
-`institutions.source_status` is `found`, `assembled`, `not_published`, or `not_available` when the
-site says no to automated visitors.
+`institutions.source_status` is `found`, `assembled`, `not_published`, or `blocked_for_automation`
+when the site says no to automated visitors.
+
+## The review list (`source_review_list`)
+Institutions that are blocked for automation or publish nothing are never dropped. They appear in
+the review list with the reason and what was checked. A person can clear one by supplying the
+source file or link, which is stored with `fetched_via = 'manual'` and then read like any other.
 
 ## Format (`source_documents.format`): how the source becomes text
 | Label | Meaning |

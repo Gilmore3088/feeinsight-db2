@@ -19,7 +19,9 @@ Where this file and the plan disagree, the plan wins; fix this file.
   product pages are valid partial sources (`docs/sources.md`). Only loan, mortgage and trust
   material is out of scope.
 - A site that says no to automated visitors is not fetched. Agents read public pages only; they
-  never sign in, submit forms or get past a block. The institution is recorded as not available.
+  never sign in, submit forms or get past a block. The institution is marked blocked for
+  automation and goes on the review list, where a person can supply the source by hand. Nothing
+  is dropped silently.
 - No on/off switches. A change either passes the frozen test cases and goes live, or it does not
   merge. No `*_LIVE` flags, no dry-run modes left behind.
 - The answer key is sealed. Tables in the `sealed` schema are read only by the scorer. Reader code,
