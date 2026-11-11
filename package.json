@@ -1,0 +1,9 @@
+{
+  "name": "feeinsight-db2",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.18" },
+  "scripts": {
+    "test": "node --test \"src/**/*.test.ts\""
+  }
+}
