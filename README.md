@@ -1,0 +1,21 @@
+# FeeInsight DB2
+
+A new, independent fee data system for Fee Insight, built to replace the current pipeline only
+after it proves better on a sealed answer key.
+
+Plan: "FeeInsight DB2: what's wrong and the plan" (https://claude.ai/artifact/MQsdZYfapynR3ST6Mk2rNC).
+
+## What is here now
+- `supabase/migrations/0001_answer_key.sql`: the tables for the sealed answer key (stage 2 of the
+  plan). Nothing else yet.
+- `docs/answer-key.md`: how the answer key is drawn, recorded, confirmed and used.
+
+## Order of work
+1. Answer key: draw 30 random institutions, record every fee line, a person confirms 20%.
+2. Fee reader: reads the stored original documents, under 5,000 lines.
+3. Scoring: the reader's output against the sealed key. Cutover needs 97% precision and 85% recall,
+   beating today's live fees.
+4. Read layer and public-data loaders.
+5. Cutover in waves, with today's system as the fallback.
+
+Rules for anyone working here are in `CLAUDE.md`.
