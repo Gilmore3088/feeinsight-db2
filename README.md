@@ -13,6 +13,9 @@ Plan: "FeeInsight DB2: what's wrong and the plan" (https://claude.ai/artifact/MQ
 - `docs/sources.md`: how sources are found in tiers and labelled.
 - `src/deming/score.ts`: the scorer (plain code). Rules in `docs/scoring.md`. Run the tests with `npm test`.
 - `src/model/wrapper.ts`: the one model wrapper with a hard spend cap. See `docs/model-wrapper.md`.
+- `src/rosetta/convert.ts`: the converter (plain code) that turns every stored source into one standard
+  record of text before any fee is read. See `docs/converter.md`. Needs `pdftotext` and `pdfinfo` (poppler).
+- `supabase/migrations/0003_standard_sources.sql`: the table for that standard text, one row per page.
 
 ## Order of work
 1. Answer key: draw 30 random institutions, record every fee line, a person confirms 20%.
