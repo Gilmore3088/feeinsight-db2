@@ -98,3 +98,13 @@ test('the interval narrows with more lines and stays inside 0 to 1', () => {
 test('amounts are ignored when comparing names', () => {
   assert.equal(overlap('Stop Payment $30.00', 'stop payment $35'), 1);
 });
+
+test('a short name inside a longer, different fee is not the same fee', () => {
+  assert.ok(overlap('NSF fee', 'Safe deposit box NSF fee') < 0.6);
+  assert.ok(overlap('Stop payment fee', 'Stop Payment') >= 0.6);
+  const key = [line({ feeName: 'Safe deposit box late payment charge', quote: 'Safe deposit box late payment charge $30.00' })];
+  const r = score(key, [line({ feeName: 'Late fee', quote: 'Late fee $30.00' })]).total;
+  assert.equal(r.matched, 0);
+  assert.equal(r.extra, 1);
+  assert.equal(r.missed, 1);
+});

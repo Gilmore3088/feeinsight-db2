@@ -14,9 +14,12 @@ live fees scored on the same key.
 
 ## How a reader fee is paired with a key line
 1. Both must be for the same institution.
-2. They must describe the same fee: their fee names, or their quotes, share at least 60% of their
-   words (dollar amounts and percentages are left out of the comparison). If both name a product
-   and the product names share no word, the likeness is halved.
+2. They must describe the same fee: their fee names, or their quotes, are at least 60% alike.
+   Likeness is twice the number of shared words, divided by the words in both. Dollar amounts,
+   percentages and words that say nothing about which fee it is ("fee", "charge", "per", "the"
+   and the like) are left out. So "NSF fee" is not the same fee as "Safe deposit box NSF fee":
+   a short name sitting inside a longer, different one does not count as a match. If both name
+   a product and the product names share no word, the likeness is halved.
 3. Each key line pairs with at most one reader fee and the other way round. Pairs with the same
    price are made first, then the most alike.
 

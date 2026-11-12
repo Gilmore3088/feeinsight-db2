@@ -44,20 +44,23 @@ const SAME_FEE = 0.6; // share of words two fee descriptions must have in common
 
 const cents = (n: number | null | undefined) => (n == null ? null : Math.round(n * 100));
 
+// Words that say nothing about which fee it is.
+const FILLER = new Set(['a', 'an', 'and', 'the', 'of', 'for', 'per', 'each', 'fee', 'fees', 'charge', 'charges', 'or', 'to', 'on', 'in']);
+
 export function words(text: string): Set<string> {
-  return new Set(
-    text.toLowerCase().replace(/[$][\d,.]+|\d+(\.\d+)?%/g, ' ').match(/[a-z0-9]+/g) ?? [],
-  );
+  const all = text.toLowerCase().replace(/[$][\d,.]+|\d+(\.\d+)?%/g, ' ').match(/[a-z0-9]+/g) ?? [];
+  const kept = all.filter((w) => !FILLER.has(w));
+  return new Set(kept.length ? kept : all);
 }
 
-/** Share of the smaller word set that also appears in the larger one, 0 to 1. */
+/** How much two descriptions share, 0 to 1: twice the shared words over the words in both.
+ * A short name inside a much longer one scores low, so "NSF" does not pass for "Safe deposit box NSF". */
 export function overlap(a: string, b: string): number {
   const x = words(a), y = words(b);
   if (x.size === 0 || y.size === 0) return 0;
-  const [small, large] = x.size <= y.size ? [x, y] : [y, x];
   let shared = 0;
-  for (const w of small) if (large.has(w)) shared++;
-  return shared / small.size;
+  for (const w of x) if (y.has(w)) shared++;
+  return (2 * shared) / (x.size + y.size);
 }
 
 /** How alike two lines are as descriptions of one fee: the better of name and quote overlap. */
