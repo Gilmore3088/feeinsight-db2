@@ -83,7 +83,8 @@ Wording and upper and lower case are kept.
 
 `containsQuote(source, quote)` says whether a quote appears, after that tidy-up on both sides, in
 any page's text or its second reading, and on which page. A quote is never matched across two
-pages. Checking that the amount appears in the quote is a later piece.
+pages. Checking that the amount appears in the quote is the second half, in
+`src/fees/quote-check.ts` (`docs/fee-record.md`).
 
 ## What this does not do yet
 - Read pages marked for image reading.

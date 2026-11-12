@@ -16,6 +16,8 @@ Plan: "FeeInsight DB2: what's wrong and the plan" (https://claude.ai/artifact/MQ
 - `src/rosetta/convert.ts`: the converter (plain code) that turns every stored source into one standard
   record of text before any fee is read. See `docs/converter.md`. Needs `pdftotext` and `pdfinfo` (poppler).
 - `supabase/migrations/0003_standard_sources.sql`: the table for that standard text, one row per page.
+- `src/fees/`: the fee record, the full quote check and the publish rule (plain code). See
+  `docs/fee-record.md`. `supabase/migrations/0004_fees.sql` is the table: one row per price, never deleted.
 
 ## Order of work
 1. Answer key: draw 30 random institutions, record every fee line, a person confirms 20%.
