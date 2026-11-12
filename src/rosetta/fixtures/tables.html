@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Title in the head is not page text</title>
+  <style>td { color: red; } .x::after { content: "style text"; }</style>
+</head>
+<BODY>
+<h1>Schedule   of
+  Fees</h1>
+<table>
+  <caption>Everyday services</caption>
+  <thead>
+    <tr><th>Service</th><th>Fee</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Stop payment</td>
+      <td>$30.00</td>
+    </tr>
+    <tr><td><p>Cashier&rsquo;s check</p></td><td><div>$8.00<br>each</div></td></tr>
+    <tr><td>Wire&nbsp;transfer &ndash; outgoing</td><td><span>$25</span><span>.00</span></td></tr>
+  </tbody>
+</table>
+<p>Paragraph one.</p><p>Paragraph <b>two</b> has <i>inline</i> words.</p>
+<ul><li>First item</li><li>Second item</li></ul>
+
+<table class="layout">
+  <tr>
+    <td>Outer cell
+      <table>
+        <tr><td>Inner fee A</td><td>$1.00</td></tr>
+        <tr><td>Inner fee B</td><td>$2.00</td></tr>
+      </table>
+      after inner
+    </td>
+    <td>Outer last</td>
+  </tr>
+</table>
+</BODY>
+</html>
