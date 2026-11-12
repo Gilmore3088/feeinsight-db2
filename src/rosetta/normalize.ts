@@ -1,6 +1,6 @@
 // The first half of the quote check: plain code, no model. A quote counts as found only if,
 // after the same tidy-up on both sides, it appears word for word in the stored text.
-// (Checking that the amount appears in the quote is a later piece.)
+// (The second half, that the amount is inside the quote, is src/fees/quote-check.ts.)
 
 import type { StandardSource } from './convert.ts';
 
