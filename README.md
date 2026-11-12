@@ -12,6 +12,7 @@ Plan: "FeeInsight DB2: what's wrong and the plan" (https://claude.ai/artifact/MQ
 - `docs/answer-key.md`: how the answer key is drawn, recorded, confirmed and used.
 - `docs/sources.md`: how sources are found in tiers and labelled.
 - `src/deming/score.ts`: the scorer (plain code). Rules in `docs/scoring.md`. Run the tests with `npm test`.
+- `src/model/wrapper.ts`: the one model wrapper with a hard spend cap. See `docs/model-wrapper.md`.
 
 ## Order of work
 1. Answer key: draw 30 random institutions, record every fee line, a person confirms 20%.
