@@ -49,7 +49,8 @@ text. Old rows are kept, so a fee can always be traced to the exact text it was 
   know is left as written.
 - Text is not added. Two words that touch in the file, with only styling between them, touch in the
   output (a footnote mark after a word, or a number and its label drawn apart by the page's
-  styling).
+  styling). For that reason the quote check ignores spacing when it compares a quote with the
+  text: the words, their order, the amounts and the case must still match exactly.
 - A file that is not valid UTF-8 is read as an old Windows page instead of failing.
 
 ## What is marked for image reading, and why

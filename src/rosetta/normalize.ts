@@ -19,10 +19,14 @@ export function normalizeText(s: string): string {
 /** Is the quote in the source? Tries each page's text, then its second reading (altText).
  * `page` is the first page it was found on (null for a web page, or when not found). */
 export function containsQuote(source: StandardSource, quote: string): { found: boolean; page: number | null } {
-  const wanted = normalizeText(quote);
+  // White space is dropped on both sides before comparing: a web page can run two cells or
+  // spans together ("$0monthly"), and a PDF can split one row over lines. Words, order,
+  // amounts and case must still match exactly.
+  const squash = (t: string) => normalizeText(t).replace(/ /g, '');
+  const wanted = squash(quote);
   if (!wanted) return { found: false, page: null };
   for (const p of source.pages) {
-    if (normalizeText(p.text).includes(wanted) || (p.altText !== undefined && normalizeText(p.altText).includes(wanted))) {
+    if (squash(p.text).includes(wanted) || (p.altText !== undefined && squash(p.altText).includes(wanted))) {
       return { found: true, page: p.page };
     }
   }

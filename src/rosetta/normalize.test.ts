@@ -63,3 +63,11 @@ test('containsQuote falls back to the second reading of a PDF page', () => {
   assert.deepEqual(containsQuote(pdf, quote), { found: true, page: 2 });
   assert.deepEqual(containsQuote(pdf, 'Overdraft fees are charged Wire transfers sent after'), { found: true, page: 2 }); // layout reading
 });
+
+test('containsQuote ignores spacing differences but not wording', () => {
+  const s = { sourceDocumentId: null, format: 'web_page', fileSha256: 'x', converterVersion: 't', needsImageReading: false, textChars: 0,
+    pages: [{ page: null, method: 'html_visible', text: '$0monthly service charge\nBuyback1 $5.00', needsImageReading: false }] } as any;
+  assert.equal(containsQuote(s, '$0 monthly service charge').found, true);
+  assert.equal(containsQuote(s, 'Buyback 1 $5.00').found, true);
+  assert.equal(containsQuote(s, '$0 monthly service fee').found, false);
+});
