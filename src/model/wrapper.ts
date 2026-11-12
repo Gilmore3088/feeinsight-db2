@@ -137,9 +137,10 @@ export function createModelClient(opts: ModelClientOptions) {
     throw new RangeError('pauseAtUsd must be a positive number no higher than capUsd');
   }
   let pauseAtUsd = opts.pauseAtUsd;
+  let inFlightUsd = 0; // worst case of calls sent but not yet answered, so parallel calls cannot jointly pass the cap
 
   const spent = () => ledger.total();
-  const remaining = () => capUsd - spent();
+  const remaining = () => capUsd - spent() - inFlightUsd;
 
   function log(input: CallInput, outcome: Outcome, note: string, usage: Usage = { inputTokens: 0, outputTokens: 0 }, costUsd = 0) {
     ledger.record({
@@ -171,12 +172,14 @@ export function createModelClient(opts: ModelClientOptions) {
         log(input, 'refused_pause', `spent $${spent().toFixed(4)}, pause point $${pauseAtUsd}`);
         throw new SpendPausedError(spent(), pauseAtUsd);
       }
-      if (spent() + worst > capUsd) {
+      if (spent() + inFlightUsd + worst > capUsd) {
         log(input, 'refused_cap', `worst case $${worst.toFixed(4)}, attempt ${attempt + 1}`);
         throw new SpendCapError(spent(), worst, capUsd);
       }
+      inFlightUsd += worst;
       try {
-        const res = await transport(request);
+        let res: TransportResponse;
+        try { res = await transport(request); } finally { inFlightUsd -= worst; }
         const cost = usd(res.usage.inputTokens, price.inputPerMillion) + usd(res.usage.outputTokens, price.outputPerMillion);
         log(input, 'ok', attempt ? `after ${attempt} retr${attempt === 1 ? 'y' : 'ies'}` : '', res.usage, cost);
         return { text: res.text, usage: res.usage, costUsd: cost };

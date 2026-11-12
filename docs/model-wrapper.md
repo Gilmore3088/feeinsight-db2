@@ -9,7 +9,8 @@ four things in plain code, with no model involved:
 1. **Checks the price first.** Before sending, it works out the worst this call could cost: the
    prompt (estimated at one token per 3 characters, which runs high) plus the full `maxTokens`
    reply at the output price. If money spent so far plus that worst case would pass the cap, it
-   refuses and sends nothing.
+   refuses and sends nothing. The worst case of calls already sent and not yet answered counts
+   too, so several calls at the same time cannot add up to more than the cap.
 2. **Pauses at the pause point.** Once money spent reaches the pause point, every call is refused
    until a person resumes.
 3. **Writes every call to a ledger**, including refused ones: time, agent, run, model, tokens, cost,

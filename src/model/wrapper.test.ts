@@ -162,3 +162,19 @@ test('bad cap or pause settings are rejected', () => {
   assert.throws(() => createModelClient({ ...base, capUsd: 0, pauseAtUsd: 0 }), RangeError);
   assert.throws(() => createModelClient({ ...base, capUsd: 5, pauseAtUsd: 6 }), RangeError);
 });
+
+test('calls sent at the same time cannot jointly pass the cap', async () => {
+  // Worst case per call is about $0.015 (1000 tokens out at $15 per million). Cap fits one, not two.
+  let release: () => void = () => {};
+  const gate = new Promise<void>((r) => { release = r; });
+  let sent = 0;
+  const transport: Transport = async () => { sent++; await gate; return { text: 'hi', usage: { inputTokens: 10, outputTokens: 10 } }; };
+  const { client } = setup({ capUsd: 0.02, pauseAtUsd: 0.02, transport });
+  const first = client.call(input);
+  await new Promise((r) => setTimeout(r, 5));
+  await assert.rejects(client.call(input), SpendCapError);
+  assert.equal(sent, 1);
+  release();
+  await first;
+  assert.ok(client.remaining() < 0.02);
+});
