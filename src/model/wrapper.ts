@@ -57,6 +57,30 @@ export class InMemoryLedger implements SpendLedger {
   record(entry: LedgerEntry): void { this.entries.push(entry); }
 }
 
+/** A ledger kept as one JSON line per entry in a file, so the total cap holds across runs.
+ * Plain code. It is read once when built; one run at a time should write to a given file. */
+export class FileLedger implements SpendLedger {
+  readonly path: string;
+  private spent = 0;
+  private fs: { read: (p: string) => string | null; append: (p: string, line: string) => void };
+  constructor(path: string, fs: { read: (p: string) => string | null; append: (p: string, line: string) => void }) {
+    this.path = path;
+    this.fs = fs;
+    const body = fs.read(path) ?? '';
+    for (const line of body.split('\n')) {
+      if (!line.trim()) continue;
+      const cost = Number(JSON.parse(line).costUsd);
+      if (!Number.isFinite(cost) || cost < 0) throw new Error(`spend ledger ${path} has a bad line; fix it by hand before spending more`);
+      this.spent += cost;
+    }
+  }
+  total(): number { return this.spent; }
+  record(entry: LedgerEntry): void {
+    this.fs.append(this.path, JSON.stringify({ ...entry, time: entry.time.toISOString() }) + '\n');
+    this.spent += entry.costUsd;
+  }
+}
+
 export class SpendCapError extends Error {
   spentUsd: number; worstCaseUsd: number; capUsd: number;
   constructor(spentUsd: number, worstCaseUsd: number, capUsd: number) {

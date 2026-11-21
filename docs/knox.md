@@ -3,9 +3,9 @@
 Knox is the agent that turns a document's stored text into fee lines. It works in two steps:
 1. **Candidate finder** (`src/knox/candidates.ts`, plain code, no model): one candidate fee line per
    price, with the bank's exact words as the quote. Built (v1).
-2. **Knox's check** (a model, through the one wrapper with its spend cap): keeps the candidates that
-   are deposit-side service fees, fixes names, products and audiences, and reads documents the
-   finder cannot split. Not built yet.
+2. **Knox's check** (`src/knox/check.ts`, Sonnet 5.5 through the one wrapper with its spend cap):
+   keeps the candidates that are deposit-side service fees, fixes names, products and audiences, and
+   adds fees the finder missed. Built; not yet run on a real model (it needs the key).
 
 The scores below are for the candidate finder alone, scored as if every candidate were a fee.
 
@@ -30,6 +30,25 @@ The scores below are for the candidate finder alone, scored as if every candidat
 - Loan, mortgage, home equity, escrow, appraisal, underwriting and trust fees: out of DB2's scope,
   the same scope the sealed key was drafted under (`sealed/DRAFTING.md`).
 - "Varies" lines: they are not scored and would only lower precision.
+
+## Knox's check (version `knox-check-1`)
+Knox gets the whole document, with a `[page N]` mark at each page, and the numbered candidates, up
+to 120 a call. It answers in JSON: the numbers it keeps, fixes to their names, products, audiences
+and units, and fees to add. A candidate it does not keep is dropped. Plain code then holds Knox to
+the document:
+- A new name or product is taken only if every word of it is in the document; otherwise the
+  finder's is kept.
+- An added fee is kept only if its quote is in the stored text word for word (white space aside),
+  its price is inside that quote, and its name's words are in the document. Its page is the page
+  that holds the quote.
+- Only the last call for a document may add fees, and an added fee that repeats a kept one goes.
+- A reply that is not JSON decides nothing: that batch's candidates are dropped, not guessed, and
+  the run says so.
+
+The prompt names no bank and holds nothing from the sealed key. Run it with
+`node src/knox/check-cli.ts --texts <texts.json> --ledger <spend-ledger.jsonl> --out <fees.json>`.
+It prints the most the run could cost before it starts and refuses a run over $25; the practice
+texts come to at most $3.63 and the sealed key's texts to at most $2.94 (2026-11-21).
 
 ## Scores (2026-11-21, candidate finder v1, no model)
 | Key | Precision | Recall | Coverage |

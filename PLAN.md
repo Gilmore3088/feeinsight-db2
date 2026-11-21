@@ -13,7 +13,7 @@ no weekly precision drop of more than 1 point.
 | # | Milestone | Done when | State |
 |---|---|---|---|
 | 1 | The yardstick | `npm run score` prints precision, recall, coverage; sealed key drafted; DB1 baseline written down | built on branch claude/m1-yardstick; PR waits on James |
-| 2 | Fee reader, one family | overdraft, NSF and monthly maintenance read end to end, >= 97% precision on the sealed key | in progress on branch claude/m2-reader: Knox's plain-code candidate finder v1 reads every family at 63.4% precision, 75.0% recall on the sealed key (docs/knox.md); Knox's model check of the candidates next |
+| 2 | Fee reader, one family | overdraft, NSF and monthly maintenance read end to end, >= 97% precision on the sealed key | in progress on branch claude/m2-reader: Knox's plain-code candidate finder v1 reads every family at 63.4% precision, 75.0% recall on the sealed key (docs/knox.md); Knox's model check built (docs/knox.md), first run waits on the key |
 | 3 | All core families | >= 97% precision, >= 85% recall on the sealed key | |
 | 4 | Scale and freshness | >= 90% of the universe, nothing older than 90 days | |
 | 5 | Cutover | the site reads DB2 and the score stays above the gate | needs James |

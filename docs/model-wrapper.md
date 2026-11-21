@@ -50,9 +50,11 @@ the environment and passes it to `anthropicTransport({ apiKey })`; with no key, 
 before it spends anything.
 
 ## Not built yet
-- **A database ledger.** Only the `SpendLedger` interface and an in-memory version (for tests)
-  exist. A database ledger needs a migration, which needs James's yes. Until then, spending is
-  forgotten when the process ends, so the cap only holds within one run.
+- **A database ledger.** A database ledger needs a migration, which needs James's yes. Until then
+  `FileLedger` keeps one JSON line per call in a file, so the $200 total holds across runs that use
+  the same file: `/mnt/project-files/feeinsight/spend-ledger.jsonl` for runs in the cloud
+  environment. It is read once when a run starts, so only one run at a time should use it. A run on
+  another machine with another file would not see this total.
 - **Real spend numbers.** Nothing here has called a real model. Costs are from the token counts the
   provider returns, and no actual spend has been measured.
 - A `DEFAULT_PRICES` table (see above).
