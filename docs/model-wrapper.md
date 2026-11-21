@@ -29,15 +29,21 @@ never text from the provider.
 - **Pause point**: a lower line. When spending reaches it, work stops. A person restarts it with
   `resume(newPauseAtUsd, by, why)`. It needs an explicit number above what is spent and no higher than
   the cap, plus who and why, which go in the ledger. Agents cannot call this on their own.
-- **Proposed numbers**: the plan proposes a **$400 cap with a pause at $200**. James has **not yet
-  confirmed** these. So the wrapper has **no default cap**: the caller must pass `capUsd` and
-  `pauseAtUsd`.
+- **Confirmed numbers (James, 2026-11-21)**: model **Sonnet 5.5** (`claude-sonnet-5-5`), a
+  **$200 total cap** across all runs, with work stopping at the cap for his word. Any single run
+  likely to cost more than **$25** still needs his yes before it starts. The wrapper still has no
+  default cap: the caller passes `capUsd` and `pauseAtUsd`, and the reader passes these numbers.
 
 ## Prices
-Prices (USD per million input and output tokens, per model id) are passed in by the caller. The
-repo and task state no prices, so there is no built-in table and none was invented. A model with no
-price throws `UnknownModelError`. Someone must supply real prices from the provider's price list
-before the first live call.
+Prices (USD per million input and output tokens, per model id) are passed in by the caller. There is
+no built-in table. A model with no price throws `UnknownModelError`. The reader passes Anthropic's
+list price for Sonnet 5.5 as of November 2026: **$2 input, $10 output** per million tokens (thinking
+tokens bill as output). Check the price list again before relying on it for a large run.
+
+## Where the key is set
+The key is never in the repo, a report or a message. James sets `ANTHROPIC_API_KEY` in his own
+shell or in a `.env` file at the repo root (`.env` is in `.gitignore`). The reader reads it from the
+environment and passes it to `anthropicTransport({ apiKey })`.
 
 ## Not built yet
 - **A database ledger.** Only the `SpendLedger` interface and an in-memory version (for tests)
