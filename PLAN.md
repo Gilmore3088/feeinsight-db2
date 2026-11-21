@@ -30,7 +30,7 @@ no weekly precision drop of more than 1 point.
 | Knox candidate finder v1, no model (2026-11-21) | Practice key | 60.5% | 75.8% | 100% |
 | Knox candidate finder v1, no model (2026-11-21) | Sealed key `key-2026-11-21` (still drafting) | 63.4% (61.1 to 65.6) | 75.0% (72.7 to 77.2) | 100% |
 
-Model steps use Sonnet 5.5 (`claude-sonnet-5-5`) with a $200 total cap; any single run over $25 needs James's yes (James, 2026-11-21). The key is set by James in his own `.env`; see docs/model-wrapper.md.
+Model steps use Sonnet 5.5 (`claude-sonnet-5-5`) with a $200 total cap; any single run over $25 needs James's yes (James, 2026-11-21). James sets the key himself as an environment variable of the cloud environment the runs happen in; see docs/model-wrapper.md.
 
 ## Where DB1 loses accuracy (2026-11-21 review)
 Traced on the practice key: of 2,305 key fees, 64.7% are live at the right price. Losses: 9.6% thrown out by verification, 9.6% shown only at another price for the same fee type (no product or tier identity), 6.2% filed under the wrong fee type, 5% percentage fees kept off the site, 3.0% taken down after going live, 3.4% never read, about 1% not in stored text. Full write-up: the Claude Doc "How the FeeInsight pipeline works and where it loses accuracy". DB2 must carry product and tier identity, keep percentage fees, and never drop a quoted fee silently.

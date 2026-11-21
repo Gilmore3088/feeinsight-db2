@@ -41,9 +41,13 @@ list price for Sonnet 5.5 as of November 2026: **$2 input, $10 output** per mill
 tokens bill as output). Check the price list again before relying on it for a large run.
 
 ## Where the key is set
-The key is never in the repo, a report or a message. James sets `ANTHROPIC_API_KEY` in his own
-shell or in a `.env` file at the repo root (`.env` is in `.gitignore`). The reader reads it from the
-environment and passes it to `anthropicTransport({ apiKey })`.
+
+The runs happen in the cloud environment that holds this repo, so a key on James's own computer does not
+reach them. James adds `ANTHROPIC_API_KEY` himself as an environment variable of that cloud environment
+(never pasted into a chat, a commit or a report). If he runs DB2 on his own machine instead, he sets it
+in his shell or in a `.env` file at the repo root (`.env` is in `.gitignore`). The code reads it from
+the environment and passes it to `anthropicTransport({ apiKey })`; with no key, a model step stops
+before it spends anything.
 
 ## Not built yet
 - **A database ledger.** Only the `SpendLedger` interface and an in-memory version (for tests)
