@@ -1,5 +1,6 @@
-// The plain-code reader: finds every priced line in a document's stored text and turns each price
-// into one fee line with the bank's exact words. No model. Rules are written out in docs/reader.md.
+// Knox's candidate finder: a plain-code tool that finds every priced line in a document's stored
+// text and turns each price into one candidate fee line with the bank's exact words. No model; Knox
+// (the model) decides which candidates are fees. Rules are written out in docs/knox.md.
 // It keeps what it cannot price ('varies') out, because an unpriced line is not scored and only
 // lowers precision.
 

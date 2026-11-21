@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { prices, readDocument, unitOf } from './read.ts';
+import { prices, readDocument, unitOf } from './candidates.ts';
 
 const doc = (text: string) => readDocument({ textId: 1, institutionId: 7, text, pageStarts: null });
 

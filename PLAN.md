@@ -13,7 +13,7 @@ no weekly precision drop of more than 1 point.
 | # | Milestone | Done when | State |
 |---|---|---|---|
 | 1 | The yardstick | `npm run score` prints precision, recall, coverage; sealed key drafted; DB1 baseline written down | built on branch claude/m1-yardstick; PR waits on James |
-| 2 | Fee reader, one family | overdraft, NSF and monthly maintenance read end to end, >= 97% precision on the sealed key | in progress on branch claude/m2-reader: plain-code reader v1 reads every family at 63.4% precision, 75.0% recall on the sealed key (docs/reader.md); model check of its rows next |
+| 2 | Fee reader, one family | overdraft, NSF and monthly maintenance read end to end, >= 97% precision on the sealed key | in progress on branch claude/m2-reader: Knox's plain-code candidate finder v1 reads every family at 63.4% precision, 75.0% recall on the sealed key (docs/knox.md); Knox's model check of the candidates next |
 | 3 | All core families | >= 97% precision, >= 85% recall on the sealed key | |
 | 4 | Scale and freshness | >= 90% of the universe, nothing older than 90 days | |
 | 5 | Cutover | the site reads DB2 and the score stays above the gate | needs James |
@@ -27,8 +27,8 @@ no weekly precision drop of more than 1 point.
 ## DB2 reader scores
 | Version | Key | Precision | Recall | Coverage |
 |---|---|---|---|---|
-| Reader v1, plain code (2026-11-21) | Practice key | 60.5% | 75.8% | 100% |
-| Reader v1, plain code (2026-11-21) | Sealed key `key-2026-11-21` (still drafting) | 63.4% (61.1 to 65.6) | 75.0% (72.7 to 77.2) | 100% |
+| Knox candidate finder v1, no model (2026-11-21) | Practice key | 60.5% | 75.8% | 100% |
+| Knox candidate finder v1, no model (2026-11-21) | Sealed key `key-2026-11-21` (still drafting) | 63.4% (61.1 to 65.6) | 75.0% (72.7 to 77.2) | 100% |
 
 Model steps use Sonnet 5.5 (`claude-sonnet-5-5`) with a $200 total cap; any single run over $25 needs James's yes (James, 2026-11-21). The key is set by James in his own `.env`; see docs/model-wrapper.md.
 

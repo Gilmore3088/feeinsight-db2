@@ -1,7 +1,13 @@
-# The plain-code reader (`src/reader/read.ts`)
+# Knox: reading fees from a document
 
-Reads a document's stored text and writes one fee line per price, with the bank's exact words as the
-quote. No model. It is the first stage of milestone 2; a model check of its rows comes next.
+Knox is the agent that turns a document's stored text into fee lines. It works in two steps:
+1. **Candidate finder** (`src/knox/candidates.ts`, plain code, no model): one candidate fee line per
+   price, with the bank's exact words as the quote. Built (v1).
+2. **Knox's check** (a model, through the one wrapper with its spend cap): keeps the candidates that
+   are deposit-side service fees, fixes names, products and audiences, and reads documents the
+   finder cannot split. Not built yet.
+
+The scores below are for the candidate finder alone, scored as if every candidate were a fee.
 
 ## What it reads
 - **Table rows**: `Name | $5`, dot leaders (`Name ....... $5`), `Name – $5`, and short lines with
@@ -25,7 +31,7 @@ quote. No model. It is the first stage of milestone 2; a model check of its rows
   the same scope the sealed key was drafted under (`sealed/DRAFTING.md`).
 - "Varies" lines: they are not scored and would only lower precision.
 
-## Scores (2026-11-21, reader v1)
+## Scores (2026-11-21, candidate finder v1, no model)
 | Key | Precision | Recall | Coverage |
 |---|---|---|---|
 | Practice key (62 institutions) | 60.5% | 75.8% | 100% |
