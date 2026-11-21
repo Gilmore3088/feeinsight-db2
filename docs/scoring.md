@@ -12,6 +12,18 @@ Each number is reported with a 95% range (Wilson interval), so a small key canno
 precise one. Cutover needs 97% precision and 85% recall, and a result clearly better than today's
 live fees scored on the same key.
 
+## Coverage
+The third number: of the key's institutions, the share for which the reader produced any fee at
+all. It shows a reader that is precise only because it skips hard institutions.
+
+## The command
+```
+npm run score -- --key <key.json> --fees <fees.json> [--by-institution]
+```
+The fees file is a JSON list of fee lines (`FeeLine` in `src/deming/score.ts`). It prints
+precision, recall and coverage with their 95% ranges, and whether each clears the gate. A number
+passes cleanly only when its whole range is above the gate.
+
 ## How a reader fee is paired with a key line
 1. Both must be for the same institution.
 2. They must describe the same fee: their fee names, or their quotes, are at least 60% alike.

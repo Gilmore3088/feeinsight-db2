@@ -3,7 +3,8 @@
 DB2 is a new, independent fee data system for Fee Insight. It is built, tested against a sealed
 answer key, and only then switched on, bank by bank. The plan of record is the Claude Doc
 "FeeInsight DB2: what's wrong and the plan" (https://claude.ai/artifact/MQsdZYfapynR3ST6Mk2rNC).
-Where this file and the plan disagree, the plan wins; fix this file.
+Where this file and the plan disagree, the plan wins; fix this file. Where the work stands, and
+what is next, is in `PLAN.md`: read it first and update it at the end of every milestone.
 
 ## Hard rules
 - Independent. Never copy, import or vendor code from the `feeinsight.com` repository (DB1).
