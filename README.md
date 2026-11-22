@@ -27,4 +27,4 @@ Plan: "FeeInsight DB2: what's wrong and the plan" (https://claude.ai/artifact/MQ
 4. Read layer and public-data loaders.
 5. Cutover in waves, with today's system as the fallback.
 
-Rules for anyone working here are in `CLAUDE.md`.
+Rules for anyone working here are in `CLAUDE.md`. Where the work stands is in `PLAN.md`.

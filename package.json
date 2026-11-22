@@ -2,8 +2,13 @@
   "name": "feeinsight-db2",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=22.18" },
+  "engines": {
+    "node": ">=22.18"
+  },
   "scripts": {
-    "test": "node --test \"src/**/*.test.ts\""
+    "test": "node --test \"src/**/*.test.ts\"",
+    "score": "node src/deming/score-cli.ts",
+    "key:check": "node src/deming/key-check-cli.ts",
+    "size": "node scripts/size-check.ts"
   }
 }
