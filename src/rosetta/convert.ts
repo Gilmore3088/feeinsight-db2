@@ -233,9 +233,15 @@ function after(html: string, mark: string, from: number): number {
   return at < 0 ? html.length : at + mark.length;
 }
 
+// Bytes 128 to 159 in an old Windows page. Spelled out here because not every Node build has the
+// windows-1252 decoder (some decode it as plain Latin-1 and leave these as control characters).
+const CP1252 = '€\u0081‚ƒ„…†‡ˆ‰Š‹Œ\u008dŽ\u008f\u0090‘’“”•–—˜™š›œ\u009džŸ';
+
 function decodeBytes(bytes: Buffer): string {
   try { return new TextDecoder('utf-8', { fatal: true }).decode(bytes); }
-  catch { return new TextDecoder('windows-1252').decode(bytes); } // not valid UTF-8: an old Windows page
+  catch { // not valid UTF-8: an old Windows page
+    return bytes.toString('latin1').replace(/[\u0080-\u009f]/g, (c) => CP1252[c.charCodeAt(0) - 0x80]);
+  }
 }
 
 // ---------- the one entry point ----------
